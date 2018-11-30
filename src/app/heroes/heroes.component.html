@@ -2,11 +2,14 @@
   <div class="row">
     <h1 class="text-center">Heroes and Villians</h1>
   </div>
+  <div class="row" *ngIf="hasFilter">
+    <button class="btn btn-primary" routerLink="/heroes">&times; Clear All Powers</button>
+  </div>
   <div class="row">
     <div class="btn-group filter-toggle" role="group">
       <button class="btn btn-primary" [ngClass]="{ 'active': filterIsActive('hero') }" (click)="updateFilter('hero')">Hero</button>
       <button class="btn btn-danger" [ngClass]="{ 'active': filterIsActive('villian') }" (click)="updateFilter('villian')">Villian</button>
-      <button class="btn btn-default" (click)="updateFilter('all')">All</button>
+      <button class="btn btn-default" [ngClass]="{ 'active': filterIsActive() }" (click)="updateFilter()">All</button>
     </div>
     <div class="col-md-4" *ngFor="let hero of heroes">
       <div class="heroBox" [ngClass]="{ 'hero': hero.hero, 'villian': !hero.hero}">
