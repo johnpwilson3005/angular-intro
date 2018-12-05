@@ -28,8 +28,8 @@ export class HeroesComponent implements OnInit {
       if (params.power) {
         this.hasFilter = true;
         this.filter = params.power;
-        const power: string = this.filter;
-        this.heroes = this.heroService.getHeroes(power);
+        const powerFilter: string = params.power;
+        this.heroes = this.heroService.getHeroes(filter, powerFilter);
       } else {
         this.hasFilter = false;
         this.filter = filter;
