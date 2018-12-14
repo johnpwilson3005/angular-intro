@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import { HeroInterface } from '../interfaces/hero-interface';
 import { HeroService } from '../services/hero.service';
@@ -9,8 +9,7 @@ import { HeroService } from '../services/hero.service';
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
-
-export class HeroesComponent implements OnInit {
+export class HeroesComponent implements OnInit, OnDestroy {
 
   heroes: HeroInterface[];
   filter: string;
@@ -18,7 +17,7 @@ export class HeroesComponent implements OnInit {
 
   constructor(private heroService: HeroService, private route: ActivatedRoute) { }
 
-  updateFilter(filter: string) {
+  updateFilter(filter?: string) {
     this.filter = filter;
     this.getHeroes(this.filter);
   }
@@ -27,7 +26,6 @@ export class HeroesComponent implements OnInit {
     return this.route.params.subscribe(params => {
       if (params.power) {
         this.hasFilter = true;
-        this.filter = params.power;
         const powerFilter: string = params.power;
         this.heroes = this.heroService.getHeroes(filter, powerFilter);
       } else {
@@ -43,7 +41,11 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getHeroes(this.filter);
+    this.getHeroes();
+  }
+
+  ngOnDestroy() {
+    this.getHeroes().unsubscribe();
   }
 
 }

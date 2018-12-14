@@ -1,6 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import { HeroInterface } from '../interfaces/hero-interface';
 import { HeroService } from '../services/hero.service';
@@ -10,7 +9,7 @@ import { HeroService } from '../services/hero.service';
   templateUrl: './hero-detail.component.html',
   styleUrls: ['./hero-detail.component.css']
 })
-export class HeroDetailComponent implements OnInit {
+export class HeroDetailComponent implements OnInit, OnDestroy {
 
   hero: HeroInterface;
 
@@ -24,6 +23,10 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getHero();
+  }
+
+  ngOnDestroy() {
+    this.getHero().unsubscribe();
   }
 
 }
